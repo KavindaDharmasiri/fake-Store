@@ -41,9 +41,9 @@ class GetService {
         return await promise
     }
 
-    fetchAllUsers = async () => {
+    fetchAllProductCategories = async () => {
         const promise = new Promise((resolve, reject) => {
-            axios.get('users')
+            axios.get('products/categories')
                 .then((res) => {
                     return resolve(res)
                 })

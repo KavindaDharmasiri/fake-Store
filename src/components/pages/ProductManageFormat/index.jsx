@@ -1,87 +1,173 @@
 import {Component} from "react";
 import {withStyles} from "@mui/styles";
 import {style} from "./style";
-import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import {Grid,  Typography} from "@mui/material";
-import logo from "../../../assets/img/pro.png";
+import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
+import {Grid, Typography} from "@mui/material";
+import GetService from "../../../services/GetService";
+import PostService from "../../../services/PostService";
+import {message} from "antd";
+
 class DefaultProduct extends Component {
 
     constructor(props) {
         super(props);
 
-        this.state ={
-            proImg: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+        this.state = {
+            proImg: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            cato: [],
+            formData: {
+                id: '',
+                title: '',
+                price: '',
+                description: '',
+                category: '',
+                image: null,
+                rating: {
+                    rate: 3.9,
+                    count: 120
+                }
+            }
         }
+    }
+
+    saveProduct = async () =>{
+        console.log("save")
+        let response = await PostService.createPostProduct(this.state.formData);
+
+        if (response.status === 200) {
+            console.log('ok')
+
+            setTimeout(() => {
+                message.success('Register Success!!')
+            }, 2000);
+
+        } else {
+            console.log('no')
+            setTimeout(() => {
+                message.error('Register Failed!!')
+            }, 2000);
+        }
+    }
+
+    async loadCato() {
+        let res = await GetService.fetchAllProductCategories();
+
+        this.setState({
+            cato: res.data,
+        })
+
+        if (res.status === 200) {
+
+        } else {
+            console.log("fetching error: " + res)
+        }
+    }
+
+    async loadAllCato() {
+        let res = await GetService.fetchAllProducts();
+
+        let temp = 0;
+        temp =  res.data[res.data.length-1].id
+        console.log('temp ' + temp)
+        temp = temp+1;
+
+        let formData = this.state.formData
+        formData.id = temp
+        this.setState({ formData })
+
+        if (res.status === 200) {
+
+        } else {
+            console.log("fetching error: " + res)
+        }
+    }
+
+    componentDidMount() {
+        this.loadCato();
+        this.loadAllCato();
+    }
+
+    handleFile(e) {
+        let file = e.target.files[0];
+        this.setState({
+            file: file
+        })
     }
 
     render() {
         const {classes} = this.props;
 
+        const catagory = this.state.cato;
+
         return (
             <div style={style.body}>
-                <ValidatorForm ref="form" className="pt-2"  >
-                    <Grid container style={{textAlign:"center"}} className="pt-2" spacing={3}>
+                <ValidatorForm ref="form" className="pt-2">
+                    <Grid container style={{textAlign: "center"}} className="pt-2" spacing={3}>
                         <Grid item lg={12} xs={12} sm={12} md={12}>
-                            <Typography variant="h2" style={{textAlign:"left"}}>Product Manage</Typography>
+                            <Typography variant="h2" style={{textAlign: "left"}}>Product Manage</Typography>
                         </Grid>
 
 
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                             <TextValidator
                                 id="outlinedbasic"
-                                placeholder="First Name"
+                                placeholder="Title"
                                 variant="outlined"
                                 size="small"
-                                style={{ width: '80%' , backgroundColor:"White" } }
-                                /*value={this.state.formData.id}*/
-                                /*onChange={(e) => {
+                                style={{width: '80%', backgroundColor: "White"}}
+                                value={this.state.formData.title}
+                                onChange={(e) => {
                                     let formData = this.state.formData
-                                    formData.id = e.target.value
+                                    formData.title = e.target.value
                                     this.setState({ formData })
-                                }}*/
+                                }}
                                 validators={['required']}
                             />
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                             <TextValidator
                                 id="outlinedbasic"
-                                placeholder="Last Name"
+                                placeholder="Price"
                                 variant="outlined"
                                 size="small"
-                                style={{ width: '80%' , backgroundColor:"White" } }
-                                /*value={this.state.formData.name}*/
-                                /*onChange={(e) => {
+                                style={{width: '80%', backgroundColor: "White"}}
+                                value={this.state.formData.price}
+                                onChange={(e) => {
                                     let formData = this.state.formData
-                                    formData.name = e.target.value
+                                    formData.price = e.target.value
                                     this.setState({ formData })
-                                }}*/
+                                }}
                                 validators={['required']}
                             />
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
-                            <select style={{backgroundColor:"white" , width:"80%" , height:"80%"}} onChange={(e) => {
+
+                            <select style={{backgroundColor: "white", width: "80%", height: "80%"}} onChange={(e) => {
                                 let formData = this.state.formData
-                                formData.type = e.target.value
+                                formData.category = e.target.value
                                 this.setState({formData})
                             }}>
-                                <option value={"Admin"}>Admin</option>
-                                <option selected value={"User"}>User</option>
+
+                                {
+                                    catagory.map((cat) => (
+                                        <option value={cat}>{cat}</option>
+                                    ))}
 
                             </select>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                             <TextValidator
                                 id="outlinedbasic"
-                                placeholder="User Name"
+                                placeholder="Description"
                                 variant="outlined"
                                 size="small"
-                                style={{ width: '80%' , backgroundColor:"White" } }
-                                /*value={this.state.formData.salary}*/
-                                /*onChange={(e) => {
+                                style={{width: '80%', backgroundColor: "White"}}
+                                value={this.state.formData.description}
+                                onChange={(e) => {
                                     let formData = this.state.formData
-                                    formData.salary = e.target.value
+                                    formData.description = e.target.value
                                     this.setState({ formData })
-                                }}*/
+                                }}
                                 validators={['required']}
                             />
                         </Grid>
@@ -90,13 +176,19 @@ class DefaultProduct extends Component {
                             <div>
                                 <img style={style.image} src={this.state.proImg} alt=""/>
                             </div>
-                            <input style={style.btnimg} type="file" name={"imageUpload"} id={"input"} accept={"image/*"}/>
+                            <input style={style.btnimg} type="file" name={"imageUpload"} id={"input"}
+                                   accept={"image/*"}
+                                   onChange={(e) => {
+                                let formData = this.state.formData
+                                formData.image = e.target.files[0]
+                                this.setState({ formData })
+                            }}/>
                         </Grid>
 
                     </Grid>
                     <div style={style.btnRight}>
-                    <button style={style.btnSec}>clear</button>
-                    <button style={style.btnSec2}>save</button>
+                        <button style={style.btnSec}>clear</button>
+                        <button style={style.btnSec2} type={"button"} onClick={this.saveProduct}>save</button>
                     </div>
                 </ValidatorForm>
 

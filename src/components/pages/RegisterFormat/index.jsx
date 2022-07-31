@@ -10,6 +10,8 @@ import Tooltip from '@mui/material/Tooltip';
 import EditIcon from '@mui/icons-material/Edit';
 import GetService from "../../../services/GetService";
 import PostService from "../../../services/PostService";
+import {confirmAlert} from 'react-confirm-alert';
+import DeleteService from "../../../services/DeleteService";
 let temp = 0;
 
 class DefaultRegister extends Component {
@@ -42,6 +44,37 @@ class DefaultRegister extends Component {
             }
         }
     }
+
+
+
+    deleteUser(value) {
+        confirmAlert({
+            title: 'Confirm to delete',
+            message: 'Are you sure you want to delete ' + value + ' user',
+            buttons: [
+                {
+                    label: 'Yes',
+                     onClick: async () => {
+                         let res = await DeleteService.deleteUser(value);
+
+                         if (res.status === 200) {
+                             setTimeout(() => {
+                                 message.error('User Deleted!!')
+                             }, 2000);
+
+                         } else {
+                             console.log("fetching error: " + res)
+                         }
+                    }
+                },
+                {
+                    label: 'No',
+                    onClick: () => alert('you Click No')
+                }
+            ]
+        });
+    }
+
 
     buttonHandler = async () =>{
         console.log("save")
@@ -88,6 +121,58 @@ class DefaultRegister extends Component {
     componentDidMount() {
         this.getAllUsers()
     }
+
+    clearFields = () => {
+        this.setState({
+            formData:{
+                address:{
+                    city:'',
+                    geolocation:{
+                        lat:'',
+                        long:''
+                    },
+                    number:'',
+                    street:'',
+                    zipcode:''
+                },
+                email:'',
+                id:'',
+                name:{
+                    firstname:'',
+                    lastname:''
+                },
+                password:'',
+                phone:'',
+                username:''
+            }
+        });
+    };
+
+    updateUser = (user) => {
+        this.setState({
+            formData:{
+                address:{
+                    city:user.address.city,
+                    geolocation:{
+                        lat:user.address.geolocation.lat,
+                        long:user.address.geolocation.long
+                    },
+                    number:user.address.number,
+                    street:user.address.street,
+                    zipcode:user.address.zipcode
+                },
+                email:user.email,
+                id:user.id,
+                name:{
+                    firstname:user.name.firstname,
+                    lastname:user.name.lastname
+                },
+                password:user.password,
+                phone:user.phone,
+                username:user.username
+            }
+        });
+    };
 
     render() {
         const {classes} = this.props;
@@ -302,7 +387,7 @@ class DefaultRegister extends Component {
                         </Grid>
                     </Grid>
                     <div style={style.btnRight}>
-                    <button style={style.btnSec}>clear</button>
+                    <button style={style.btnSec} type={"button"} onClick={this.clearFields}>clear</button>
                     <button style={style.btnSec2} type={"button"} onClick={this.buttonHandler}>save</button>
                     </div>
                 </ValidatorForm>
@@ -350,7 +435,7 @@ class DefaultRegister extends Component {
                                                     <IconButton
                                                         onClick={() => {
                                                             console.log("edit icon clicked!")
-                                                            /*this.updateCustomer(row);*/
+                                                            this.updateUser(user);
                                                         }}
                                                     >
                                                         <EditIcon color="primary" />
@@ -359,7 +444,7 @@ class DefaultRegister extends Component {
                                                 <Tooltip title="Delete">
                                                     <IconButton
                                                         onClick={() => {
-                                                            /*this.deleteCustomer(row.id)*/
+                                                            this.deleteUser(user.id)
                                                         }}
                                                     >
                                                         <DeleteIcon color="error" />
