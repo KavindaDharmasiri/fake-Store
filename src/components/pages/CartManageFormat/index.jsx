@@ -6,6 +6,8 @@ import {Grid, Typography} from "@mui/material";
 import GetService from "../../../services/GetService";
 import PostService from "../../../services/PostService";
 import {message} from "antd";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 class DefaultCart extends Component {
 
@@ -24,10 +26,10 @@ class DefaultCart extends Component {
                         quantity: ''
                     }
                 ],
-
-
-            }
+            },
+            alert:''
         }
+
     }
 
     async loadUserName() {
@@ -70,15 +72,27 @@ class DefaultCart extends Component {
         if (response.status === 200) {
             console.log('ok')
 
-            setTimeout(() => {
-                message.success('Register Success!!')
-            }, 2000);
+            this.setState({
+                alert:"success"
+            })
+
+            setTimeout(()=>{
+                this.setState({
+                    alert:'no'
+                })
+            },2000)
 
         } else {
             console.log('no')
-            setTimeout(() => {
-                message.error('Register Failed!!')
-            }, 2000);
+            this.setState({
+                alert:"error"
+            })
+
+            setTimeout(()=>{
+                this.setState({
+                    alert:'no'
+                })
+            },2000)
         }
     }
 
@@ -112,6 +126,22 @@ class DefaultCart extends Component {
 
         return (
             <div style={style.body}>
+
+                {this.state.alert === "success" ?
+                    <Alert severity="success" style={{position:"fixed" , width:"100%" , zIndex:"99"}}>
+                        <AlertTitle>Success</AlertTitle>
+                        Cart Adding Success — <strong>check it out!</strong>
+                    </Alert> : null
+                }
+
+                {this.state.alert === "error" ?
+                    <Alert severity="error" style={{position:"fixed" , width:"100%" , zIndex:"99"}}>
+                        <AlertTitle>Error</AlertTitle>
+                        Cart Adding UnSuccess — <strong>check it out!</strong>
+                    </Alert> : null
+                }
+
+
                 <ValidatorForm ref="form" className="pt-2">
                     <Grid container style={{textAlign: "center"}} className="pt-2" spacing={3}>
                         <Grid item lg={12} xs={12} sm={12} md={12}>

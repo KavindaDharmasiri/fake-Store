@@ -8,7 +8,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 
 
-import {Outlet} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -81,23 +81,27 @@ export default function MiniDrawer() {
     const [open, setOpen] = React.useState(false);
 
 
+
     return (
         <Box sx={{display: 'flex'}} >
             <CssBaseline/>
             <AppBar position="fixed" open={open} style={{backgroundColor:"#92A3E0"}}>
                 <Toolbar>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-                        <button>DashBoard</button>
+                        <button><Link to="/dashBoard">DashBoard</Link></button>
 
                         <div style={{position:"absolute", right:"500px"}}>
-                            <button>Product</button>
-                            <button>Cart</button>
+                            <button >
+                                <Link to="/product">Product</Link>
+                            </button>
+                            <button>
+                                <Link to="/cart">Cart</Link>
+                            </button>
                         </div>
                     </Box>
 
 
-
-                    <h1 style={{position:"relative",right:"25px" , color:"black"}}>name</h1>
+                    <h1 style={{position:"relative",right:"25px" , color:"black"}}>{(window.location.href).slice(35)}</h1>
                 </Toolbar>
             </AppBar>
 
