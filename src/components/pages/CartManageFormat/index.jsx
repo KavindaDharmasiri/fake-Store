@@ -164,7 +164,7 @@ class DefaultCart extends Component {
 
 
                         <Grid item xs={12} sm={12} md={6} lg={6}>
-                            <input style={{backgroundColor: "white", width: "80%", height: "150%"}} type="date"
+                            <input style={{backgroundColor: "white", width: "80%", height: "150%"}} type="date" rules={[{required:true}]}
                                    onChange={(e) => {
                                        let formData = this.state.formData
                                        formData.date = e.target.value

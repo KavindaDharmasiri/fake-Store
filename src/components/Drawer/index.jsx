@@ -88,14 +88,14 @@ export default function MiniDrawer() {
             <AppBar position="fixed" open={open} style={{backgroundColor:"#92A3E0"}}>
                 <Toolbar>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-                        <button><Link to="/dashBoard">DashBoard</Link></button>
+                        <button style={{height:"25px" , width:"70px" , borderRadius:"10px" }}><Link to="/dashBoard" style={{ textDecoration:"none" , color:"black"}}>DashBoard</Link></button>
 
-                        <div style={{position:"absolute", right:"500px"}}>
-                            <button >
-                                <Link to="/product">Product</Link>
+                        <div style={{position:"absolute", right:"500px" }}>
+                            <button style={{height:"25px" , marginRight:"20px" , width:"50px" , borderRadius:"10px" }}>
+                                <Link to="/product"  style={{ textDecoration:"none" , color:"black"}}>Product</Link>
                             </button>
-                            <button>
-                                <Link to="/cart">Cart</Link>
+                            <button style={{height:"25px" , width:"50px" , borderRadius:"10px" }}>
+                                <Link to="/cart" style={{ textDecoration:"none" , color:"black"}}>Cart</Link>
                             </button>
                         </div>
                     </Box>

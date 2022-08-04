@@ -17,7 +17,7 @@ export const style = {
     boxShadow: "11px 12px 13px 12px rgb(207, 207, 207)",
     paddingTop: "30px",
     backgroundColor: "#C5B5B5",
-        width:"35%",
+        width:"50%",
         textAlign: "center"
 
 },

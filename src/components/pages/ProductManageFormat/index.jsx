@@ -34,34 +34,55 @@ class DefaultProduct extends Component {
 
     }
 
+    clearProduct = async () =>{
+        this.setState({
+            proImg: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            formData: {
+                id: '',
+                title: '',
+                price: '',
+                description: '',
+                category: '',
+                image: null,
+                rating: {
+                    rate: 3.9,
+                    count: 120
+                }
+            }
+        })
+    }
+
     saveProduct = async () =>{
-        console.log("save")
-        let response = await PostService.createPostProduct(this.state.formData);
 
-        if (response.status === 200) {
-            console.log('ok')
+        if (this.state.formData.title !== '' && this.state.formData.price !== '' && this.state.formData.description !== '' ) {
+            console.log("save")
+            let response = await PostService.createPostProduct(this.state.formData);
 
-           this.setState({
-               alert:"success"
-           })
+            if (response.status === 200) {
+                console.log('ok')
 
-            setTimeout(()=>{
                 this.setState({
-                    alert:'no'
+                    alert: "success"
                 })
-            },2000)
 
-        } else {
-            console.log('no')
-            this.setState({
-                alert:"error"
-            })
+                setTimeout(() => {
+                    this.setState({
+                        alert: 'no'
+                    })
+                }, 2000)
 
-            setTimeout(()=>{
+            } else {
+                console.log('no')
                 this.setState({
-                    alert:'no'
+                    alert: "error"
                 })
-            },2000)
+
+                setTimeout(() => {
+                    this.setState({
+                        alert: 'no'
+                    })
+                }, 2000)
+            }
         }
     }
 
@@ -229,8 +250,8 @@ class DefaultProduct extends Component {
 
                     </Grid>
                     <div style={style.btnRight}>
-                        <button style={style.btnSec}>clear</button>
-                        <button style={style.btnSec2} type={"button"} onClick={this.saveProduct}>save</button>
+                        <button style={style.btnSec} onClick={this.clearProduct} >clear</button>
+                        <button style={style.btnSec2} onClick={this.saveProduct}>save</button>
                     </div>
                 </ValidatorForm>
 
