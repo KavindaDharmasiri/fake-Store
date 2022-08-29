@@ -10,13 +10,13 @@ class DefaultDashBoard extends Component {
         super(props);
 
         this.state = {
-            product:'',
-            cart:'',
-            user:''
+            product: '',
+            cart: '',
+            user: ''
         }
     }
 
-    async loadProducts (){
+    async loadProducts() {
         let res = await GetService.fetchAllProducts();
 
         this.setState({
@@ -31,7 +31,7 @@ class DefaultDashBoard extends Component {
         }
     }
 
-    async loadCarts (){
+    async loadCarts() {
         let res = await GetService.fetchAllCarts();
 
         this.setState({
@@ -46,7 +46,7 @@ class DefaultDashBoard extends Component {
         }
     }
 
-    async loadUsers (){
+    async loadUsers() {
         let res = await GetService.fetchAllUsers();
 
         this.setState({

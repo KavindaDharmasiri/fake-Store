@@ -3,7 +3,6 @@ import {withStyles} from "@mui/styles";
 import {style} from "./style";
 import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@mui/material";
-import {message} from 'antd'
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -215,7 +214,6 @@ class DefaultRegister extends Component {
                     </Alert> : null
                 }
 
-
                 {this.state.alert === "error" ?
                     <Alert severity="error" style={{position: "fixed", width: "100%", zIndex: "99"}}>
                         <AlertTitle>Error</AlertTitle>
@@ -230,7 +228,6 @@ class DefaultRegister extends Component {
                     </Alert> : null
                 }
 
-
                 {this.state.alert === "no" ?
                     <Alert severity="error" style={{position: "fixed", width: "100%", zIndex: "99"}}>
                         <AlertTitle>Error</AlertTitle>
@@ -243,7 +240,6 @@ class DefaultRegister extends Component {
                         <Grid item lg={12} xs={12} sm={12} md={12}>
                             <Typography variant="h2" style={{textAlign: "left"}}>User Registration</Typography>
                         </Grid>
-
 
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                             <TextValidator
@@ -309,7 +305,6 @@ class DefaultRegister extends Component {
                                 validators={['required']}
                             />
                         </Grid>
-
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                             <TextValidator
                                 id="outlinedbasic"
@@ -374,7 +369,6 @@ class DefaultRegister extends Component {
                                 validators={['required']}
                             />
                         </Grid>
-
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                             <TextValidator
                                 id="outlinedbasic"
@@ -483,7 +477,6 @@ class DefaultRegister extends Component {
                                             <TableCell align="left">{user.address.geolocation.long}</TableCell>
                                             <TableCell align="left">{user.phone}</TableCell>
 
-
                                             <TableCell align="left">
                                                 <Tooltip title="Edit">
                                                     <IconButton
@@ -502,8 +495,6 @@ class DefaultRegister extends Component {
                                                                 openModel: 'true',
                                                                 useId: user.id
                                                             })
-
-                                                            /*this.deleteUser(user.id)*/
                                                         }}
                                                     >
                                                         <DeleteIcon color="error"/>

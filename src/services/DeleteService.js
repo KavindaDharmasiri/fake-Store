@@ -5,7 +5,7 @@ class DeleteService {
     deleteUser = async (data) => {
 
         const promise = new Promise((resolve, reject) => {
-            axios.delete('users/'+data)   //10s
+            axios.delete('users/' + data)
                 .then((res) => {
                     console.log(res)
                     return resolve(res)

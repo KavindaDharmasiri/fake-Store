@@ -5,7 +5,6 @@ import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import {Grid, Typography} from "@mui/material";
 import GetService from "../../../services/GetService";
 import PostService from "../../../services/PostService";
-import {message} from "antd";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
@@ -27,7 +26,7 @@ class DefaultCart extends Component {
                     }
                 ],
             },
-            alert:''
+            alert: ''
         }
 
     }
@@ -73,26 +72,26 @@ class DefaultCart extends Component {
             console.log('ok')
 
             this.setState({
-                alert:"success"
+                alert: "success"
             })
 
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.setState({
-                    alert:'no'
+                    alert: 'no'
                 })
-            },2000)
+            }, 2000)
 
         } else {
             console.log('no')
             this.setState({
-                alert:"error"
+                alert: "error"
             })
 
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.setState({
-                    alert:'no'
+                    alert: 'no'
                 })
-            },2000)
+            }, 2000)
         }
     }
 
@@ -128,14 +127,14 @@ class DefaultCart extends Component {
             <div style={style.body}>
 
                 {this.state.alert === "success" ?
-                    <Alert severity="success" style={{position:"fixed" , width:"100%" , zIndex:"99"}}>
+                    <Alert severity="success" style={{position: "fixed", width: "100%", zIndex: "99"}}>
                         <AlertTitle>Success</AlertTitle>
                         Cart Adding Success — <strong>check it out!</strong>
                     </Alert> : null
                 }
 
                 {this.state.alert === "error" ?
-                    <Alert severity="error" style={{position:"fixed" , width:"100%" , zIndex:"99"}}>
+                    <Alert severity="error" style={{position: "fixed", width: "100%", zIndex: "99"}}>
                         <AlertTitle>Error</AlertTitle>
                         Cart Adding UnSuccess — <strong>check it out!</strong>
                     </Alert> : null
@@ -164,7 +163,8 @@ class DefaultCart extends Component {
 
 
                         <Grid item xs={12} sm={12} md={6} lg={6}>
-                            <input style={{backgroundColor: "white", width: "80%", height: "150%"}} type="date" rules={[{required:true}]}
+                            <input style={{backgroundColor: "white", width: "80%", height: "150%"}} type="date"
+                                   rules={[{required: true}]}
                                    onChange={(e) => {
                                        let formData = this.state.formData
                                        formData.date = e.target.value

@@ -5,7 +5,6 @@ import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import {Grid, Typography} from "@mui/material";
 import GetService from "../../../services/GetService";
 import PostService from "../../../services/PostService";
-import {message} from "antd";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
@@ -29,12 +28,12 @@ class DefaultProduct extends Component {
                     count: 120
                 }
             },
-            alert:''
+            alert: ''
         }
 
     }
 
-    clearProduct = async () =>{
+    clearProduct = async () => {
         this.setState({
             proImg: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
             formData: {
@@ -52,9 +51,9 @@ class DefaultProduct extends Component {
         })
     }
 
-    saveProduct = async () =>{
+    saveProduct = async () => {
 
-        if (this.state.formData.title !== '' && this.state.formData.price !== '' && this.state.formData.description !== '' ) {
+        if (this.state.formData.title !== '' && this.state.formData.price !== '' && this.state.formData.description !== '') {
             console.log("save")
             let response = await PostService.createPostProduct(this.state.formData);
 
@@ -104,13 +103,13 @@ class DefaultProduct extends Component {
         let res = await GetService.fetchAllProducts();
 
         let temp = 0;
-        temp =  res.data[res.data.length-1].id
+        temp = res.data[res.data.length - 1].id
         console.log('temp ' + temp)
-        temp = temp+1;
+        temp = temp + 1;
 
         let formData = this.state.formData
         formData.id = temp
-        this.setState({ formData })
+        this.setState({formData})
 
         if (res.status === 200) {
 
@@ -131,11 +130,11 @@ class DefaultProduct extends Component {
         })
     }
 
-    showImg(e){
+    showImg(e) {
         const urlImg = URL.createObjectURL(e)
         console.log(urlImg)
         this.setState({
-            proImg : urlImg
+            proImg: urlImg
         })
     }
 
@@ -148,14 +147,14 @@ class DefaultProduct extends Component {
             <div style={style.body}>
 
                 {this.state.alert === "success" ?
-                    <Alert severity="success" style={{position:"fixed" , width:"100%" , zIndex:"99"}}>
+                    <Alert severity="success" style={{position: "fixed", width: "100%", zIndex: "99"}}>
                         <AlertTitle>Success</AlertTitle>
                         Product Adding Success — <strong>check it out!</strong>
                     </Alert> : null
                 }
 
                 {this.state.alert === "error" ?
-                    <Alert severity="error" style={{position:"fixed" , width:"100%" , zIndex:"99"}}>
+                    <Alert severity="error" style={{position: "fixed", width: "100%", zIndex: "99"}}>
                         <AlertTitle>Error</AlertTitle>
                         Product Adding UnSuccess — <strong>check it out!</strong>
                     </Alert> : null
@@ -180,7 +179,7 @@ class DefaultProduct extends Component {
                                 onChange={(e) => {
                                     let formData = this.state.formData
                                     formData.title = e.target.value
-                                    this.setState({ formData })
+                                    this.setState({formData})
                                 }}
                                 validators={['required']}
                             />
@@ -196,7 +195,7 @@ class DefaultProduct extends Component {
                                 onChange={(e) => {
                                     let formData = this.state.formData
                                     formData.price = e.target.value
-                                    this.setState({ formData })
+                                    this.setState({formData})
                                 }}
                                 validators={['required']}
                             />
@@ -227,7 +226,7 @@ class DefaultProduct extends Component {
                                 onChange={(e) => {
                                     let formData = this.state.formData
                                     formData.description = e.target.value
-                                    this.setState({ formData })
+                                    this.setState({formData})
                                 }}
                                 validators={['required']}
                             />
@@ -240,17 +239,17 @@ class DefaultProduct extends Component {
                             <input style={style.btnimg} type="file" name={"imageUpload"} id={"input"}
                                    accept={"image/*"}
                                    onChange={(e) => {
-                                let formData = this.state.formData
-                                formData.image = e.target.files[0]
-                                this.setState({ formData })
+                                       let formData = this.state.formData
+                                       formData.image = e.target.files[0]
+                                       this.setState({formData})
 
                                        this.showImg(e.target.files[0])
-                            }}/>
+                                   }}/>
                         </Grid>
 
                     </Grid>
                     <div style={style.btnRight}>
-                        <button style={style.btnSec} onClick={this.clearProduct} >clear</button>
+                        <button style={style.btnSec} onClick={this.clearProduct}>clear</button>
                         <button style={style.btnSec2} onClick={this.saveProduct}>save</button>
                     </div>
                 </ValidatorForm>
